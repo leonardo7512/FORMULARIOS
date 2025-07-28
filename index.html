@@ -23,8 +23,6 @@
         .form-subtitle { font-size: 14px; color: #666; }
         .form-row { display: flex; margin-bottom: 20px; gap: 20px; }
         .form-group { flex: 1; }
-        .form-group.half { flex: 0.5; }
-        .form-group.full { flex: 1; width: 100%; }
         label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
         input[type="text"], input[type="email"], input[type="number"], select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; }
         input[readonly] { background-color: #f0f0f0; cursor: not-allowed; color: #555; font-weight: bold; }
@@ -37,17 +35,24 @@
         .products-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
         .products-table th, .products-table td { border: 1px solid #333; padding: 5px; text-align: left; vertical-align: middle; }
         .products-table th { background-color: #f0f0f0; font-weight: bold; }
-        .products-table input, .products-table select { width: 100%; border: 1px solid #ddd; padding: 4px; }
+        .products-table input, .products-table select { width: 100%; border: 1px solid #ddd; padding: 4px; font-size: 11px; }
         .print-btn { position: fixed; top: 20px; right: 20px; background: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; z-index: 1000; }
         .print-btn:hover { background: #1e3d6f; }
+        
         @media print {
-            body { background: white; padding: 0; }
+            body { background: white; padding: 0; margin: 0; font-size: 10pt; line-height: 1.2; }
             .container { box-shadow: none; border-radius: 0; max-width: none; }
             .form-selector, .print-btn { display: none; }
             .form-content { display: block !important; padding: 0; }
-            .print-area { width: 100%; min-height: auto; padding: 0; margin: 0; }
-            .form-content:not(.active) { display: none !important; }
-            .products-table input, .products-table select, input, select, textarea { border: none !important; background-color: white !important; -webkit-appearance: none; -moz-appearance: none; appearance: none; }
+            .print-area { width: 100%; min-height: auto; padding: 0.5in; margin: 0; }
+            .header { margin-bottom: 15px; padding-bottom: 10px; }
+            .form-row { margin-bottom: 10px; }
+            .table-section { margin: 15px 0; }
+            .products-table th, .products-table td { padding: 3px; }
+            .signature-section { margin-top: 20px; page-break-inside: avoid; }
+            h3 { margin: 15px 0 10px 0 !important; }
+            textarea { min-height: 40px; }
+            .products-table input, .products-table select, input, select, textarea { border: none !important; background-color: white !important; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 10pt; }
             .underline-field { border-bottom: 1px solid #333 !important; }
             input[readonly] { background-color: #f0f0f0 !important; }
         }
@@ -224,7 +229,6 @@
                             <input type="text" id="vendedor" name="vendedor" class="underline-field" placeholder="Nombre del receptor">
                         </div>
                     </div>
-                    
                     <div class="form-row">
                         <div class="form-group" style="flex: 0.4;">
                             <label for="tipo-doc-rec">Tipo Documento:</label>
@@ -256,42 +260,84 @@
                         <table class="products-table">
                             <thead>
                                 <tr>
-                                    <th style="width: 30%;">Nombre Producto</th><th style="width: 15%;">SKU</th><th style="width: 10%;">Cantidad</th><th style="width: 20%;">Estado Mercadería</th><th style="width: 25%;">Embalaje Completo</th>
+                                    <th style="width: 20%;">Nombre Producto</th>
+                                    <th style="width: 10%;">SKU</th>
+                                    <th style="width: 5%;">Cant.</th>
+                                    <th style="width: 15%;">Estado (Receptor)</th>
+                                    <th style="width: 15%;">Verificación (Bodega)</th>
+                                    <th style="width: 17.5%;">Embalaje (Receptor)</th>
+                                    <th style="width: 17.5%;">Embalaje (Bodega)</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="text"></td><td><select><option value="">-</option><option value="Sí">Sí</option><option value="No">No</option><option value="N/A">N/A</option></select></td></tr>
-                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="text"></td><td><select><option value="">-</option><option value="Sí">Sí</option><option value="No">No</option><option value="N/A">N/A</option></select></td></tr>
-                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="text"></td><td><select><option value="">-</option><option value="Sí">Sí</option><option value="No">No</option><option value="N/A">N/A</option></select></td></tr>
-                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="text"></td><td><select><option value="">-</option><option value="Sí">Sí</option><option value="No">No</option><option value="N/A">N/A</option></select></td></tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
+                                    <td><input type="text" placeholder="Ej: Conforme, no coincide..."></td>
+                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
+                                    <td><select><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
+                                    <td><input type="text" placeholder="Ej: Conforme, no coincide..."></td>
+                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
+                                    <td><select><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
+                                    <td><input type="text" placeholder="Ej: Conforme, no coincide..."></td>
+                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
+                                    <td><select><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
+                                </tr>
+                               <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
+                                    <td><input type="text" placeholder="Ej: Conforme, no coincide..."></td>
+                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
+                                    <td><select><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
+                                    <td><input type="text" placeholder="Ej: Conforme, no coincide..."></td>
+                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
+                                    <td><select><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
+                                    <td><input type="text" placeholder="Ej: Conforme, no coincide..."></td>
+                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
+                                    <td><select><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
                     
                     <div class="form-row">
-                        <div class="form-group full">
-                            <label for="observaciones-vendedor">Observaciones del Receptor:</label>
-                            <textarea id="observaciones-vendedor" name="observaciones-vendedor" rows="3" placeholder="Anotaciones del receptor sobre el estado general..."></textarea>
-                        </div>
+                        <div class="form-group full"><label for="observaciones-vendedor">Observaciones del Receptor:</label><textarea id="observaciones-vendedor" rows="3" placeholder="Anotaciones del receptor..."></textarea></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group full">
-                            <label for="observaciones-bodega">Observaciones de Bodega:</label>
-                            <textarea id="observaciones-bodega" name="observaciones-bodega" rows="4" placeholder="Comentarios del personal de bodega..."></textarea>
-                        </div>
+                        <div class="form-group full"><label for="observaciones-bodega">Observaciones de Bodega:</label><textarea id="observaciones-bodega" rows="4" placeholder="Comentarios del personal de bodega..."></textarea></div>
                     </div>
                     
                     <div class="signature-section">
-                        <div class="signature-box">
-                            <div class="signature-line"></div>
-                            <strong>Firma Receptor</strong><br>
-                            <span style="font-size: 11px;" id="nombre-vendedor-firma">Nombre del receptor</span>
-                        </div>
-                        <div class="signature-box">
-                            <div class="signature-line"></div>
-                            <strong>Firma Jefe de Bodega</strong><br>
-                            <span style="font-size: 11px;">Validación y conformidad</span>
-                        </div>
+                        <div class="signature-box"><div class="signature-line"></div><strong>Firma Receptor</strong><br><span style="font-size: 11px;" id="nombre-vendedor-firma">Nombre del receptor</span></div>
+                        <div class="signature-box"><div class="signature-line"></div><strong>Firma Jefe de Bodega</strong><br><span style="font-size: 11px;">Validación y conformidad</span></div>
                     </div>
                 </form>
             </div>
