@@ -39,16 +39,10 @@
         .print-btn { position: fixed; top: 20px; right: 20px; background: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; z-index: 1000; }
         .print-btn:hover { background: #1e3d6f; }
         
-        /* ✨ INICIO: CSS DE IMPRESIÓN CORREGIDO Y AJUSTADO PARA TAMAÑO CARTA */
         @media print {
             body { background: white; padding: 0; margin: 0; font-size: 9.5pt; line-height: 1.15; }
             .container { box-shadow: none; border-radius: 0; max-width: none; }
-            
-            /* Oculta todo lo que no es el formulario activo */
-            .form-selector, .print-btn, .form-content:not(.active) {
-                display: none !important;
-            }
-
+            .form-selector, .print-btn, .form-content:not(.active) { display: none !important; }
             .form-content.active { display: block !important; padding: 0; }
             .print-area { width: 100%; min-height: auto; padding: 0.4in; margin: 0; }
             .header { margin-bottom: 12px; padding-bottom: 8px; }
@@ -58,14 +52,11 @@
             .signature-section { margin-top: 20px; page-break-inside: avoid; }
             .signature-line { height: 35px !important; margin-bottom: 5px;}
             h3 { margin: 12px 0 8px 0 !important; }
-            textarea { min-height: 30px !important; }
-            
-            /* Limpia la apariencia de los campos para que parezca texto plano */
-            .products-table input, .products-table select, input, select, textarea { border: none !important; background-color: white !important; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 9.5pt; }
+            textarea { min-height: 30px !important; border: 1px solid #ccc !important; }
+            .products-table input, .products-table select, input, select { border: none !important; background-color: white !important; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 9.5pt; }
             .underline-field { border-bottom: 1px solid #333 !important; }
             input[readonly] { background-color: #f0f0f0 !important; }
         }
-        /* ✨ FIN: CSS DE IMPRESIÓN */
     </style>
 </head>
 <body>
@@ -165,58 +156,34 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
-                                    <td>&nbsp;</td>
-                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
-                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
-                                    <td>&nbsp;</td>
-                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
-                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
-                                    <td>&nbsp;</td>
-                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
-                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
                                 </tr>
                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
-                                    <td>&nbsp;</td>
-                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
-                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
-                                    <td>&nbsp;</td>
-                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
-                                    <td>&nbsp;</td>
+                                    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
                                 </tr>
-                                </tbody>
+                                <tr>
+                                    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td>
+                                </tr>
+                            </tbody>
                         </table>
+                        </div>
+                    <div class="form-row">
+                        <div class="form-group full"><label for="observaciones-vendedor">Observaciones del Receptor:</label><textarea id="observaciones-vendedor" name="observaciones-vendedor" rows="3"></textarea></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group full"><label for="observaciones-vendedor">Observaciones del Receptor:</label><textarea id="observaciones-vendedor" rows="3" placeholder="Anotaciones del receptor..."></textarea></div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group full"><label for="observaciones-bodega">Observaciones de Bodega:</label><textarea id="observaciones-bodega" rows="4" placeholder="Comentarios del personal de bodega..."></textarea></div>
+                        <div class="form-group full"><label for="observaciones-bodega">Observaciones de Bodega:</label><textarea id="observaciones-bodega" name="observaciones-bodega" rows="3"></textarea></div>
                     </div>
                     <div class="signature-section">
                         <div class="signature-box"><div class="signature-line"></div><strong>Firma Receptor</strong><br><span style="font-size: 11px;" id="nombre-vendedor-firma">Nombre del receptor</span></div>
