@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formularios Aromaker</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .form-selector {
+            display: flex;
+            background: #e0e0e0;
+        }
+        
+        .form-tab {
+            flex: 1;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            background: #e0e0e0;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        
+        .form-tab.active {
+            background: white;
+            color: #2c5aa0;
+        }
+        
+        .form-tab:hover {
+            background: #d0d0d0;
+        }
+        
+        .form-tab.active:hover {
+            background: white;
+        }
+        
+        .form-content {
+            display: none;
+            padding: 30px;
+        }
+        
+        .form-content.active {
+            display: block;
+        }
+        
+        .print-area {
+            width: 8.5in;
+            min-height: 11in;
+            margin: 0 auto;
+            background: white;
+            padding: 0.75in;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #2c5aa0;
+        }
+        
+        .logo {
+            width: 200px;
+            height: auto;
+            margin-right: 20px;
+        }
+        
+        .logo-text {
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .company-info {
+            flex-grow: 1;
+        }
+        
+        .form-title {
+            font-size: 24px;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 10px;
+        }
+        
+        .form-subtitle {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .form-row {
+            display: flex;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+        
+        .form-group {
+            flex: 1;
+        }
+        
+        .form-group.half {
+            flex: 0.5;
+        }
+        
+        .form-group.full {
+            flex: 1;
+            width: 100%;
+        }
+        
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        
+        input[type="text"], 
+        input[type="email"], 
+        input[type="number"], 
+        select, 
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+
+        /* ✨ NUEVO ESTILO para campos de solo lectura */
+        input[readonly] {
+            background-color: #f0f0f0;
+            cursor: not-allowed;
+            color: #555;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 60px;
+        }
+        
+        .underline-field {
+            border: none;
+            border-bottom: 1px solid #333;
+            border-radius: 0; /* Quitar borde redondeado para que se vea bien la línea */
+            padding: 5px 0;
+            background: transparent;
+        }
+        
+        .signature-section {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .signature-box {
+            width: 45%;
+            text-align: center;
+        }
+        
+        .signature-line {
+            border-bottom: 1px solid #333;
+            height: 50px;
+            margin-bottom: 10px;
+        }
+        
+        .table-section {
+            margin: 30px 0;
+        }
+        
+        .products-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        .products-table th,
+        .products-table td {
+            border: 1px solid #333;
+            padding: 8px;
+            text-align: left;
+        }
+        
+        .products-table th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        
+        .products-table td {
+            height: 40px;
+            vertical-align: top;
+        }
+        
+        .print-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2c5aa0;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            z-index: 1000;
+        }
+        
+        .print-btn:hover {
+            background: #1e3d6f;
+        }
+        
+        @media print {
+            body {
+                background: white;
+                padding: 0;
+            }
+            
+            .container {
+                box-shadow: none;
+                border-radius: 0;
+                max-width: none;
+            }
+            
+            .form-selector,
+            .print-btn {
+                display: none;
+            }
+            
+            .form-content {
+                display: block !important;
+                padding: 0;
+            }
+            
+            .print-area {
+                width: 100%;
+                min-height: auto;
+                padding: 0;
+                margin: 0;
+            }
+            
+            .form-content:not(.active) {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
+    
+    <div class="container">
+        <div class="form-selector">
+            <button class="form-tab active" onclick="showForm('devolucion')">
+                📋 Formulario de Devolución de Dinero
+            </button>
+            <button class="form-tab" onclick="showForm('recepcion')">
+                📦 Formulario de Recepción de Mercadería
+            </button>
+        </div>
+        
+        <div id="devolucion" class="form-content active">
+            <div class="print-area">
+                <div class="header">
+                    <div class="logo-text">
+                        <span style="font-family: Arial, sans-serif; font-size: 36px; font-weight: normal; color: #2c5aa0;">aroma</span><span style="font-family: Arial, sans-serif; font-size: 36px; font-weight: 300; color: #42A5F5;">maker</span>
+                    </div>
+                    
+                    <div class="company-info">
+                        <div class="form-title">SOLICITUD DE DEVOLUCIÓN DE DINERO</div>
+                        <div class="form-subtitle">Formulario para procesamiento de reembolsos</div>
+                    </div>
+                </div>
+                
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rut-cliente">RUT Cliente:</label>
+                            <input type="text" id="rut-cliente" name="rut-cliente" class="underline-field" placeholder="12.345.678-9">
+                        </div>
+                        <div class="form-group">
+                            <label for="nota-venta">Nota de Venta:</label>
+                             <input type="text" id="nota-venta" name="nota-venta" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="doc-asociado">Documento Asociado (Factura/Boleta):</label>
+                            <input type="text" id="doc-asociado" name="doc-asociado" class="underline-field" placeholder="Número de documento">
+                        </div>
+                        <div class="form-group">
+                            <label for="quien-solicita">Quien Solicita:</label>
+                            <input type="text" id="quien-solicita" name="quien-solicita" class="underline-field" placeholder="Nombre completo">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full">
+                            <label for="motivo">Motivo de la Devolución:</label>
+                            <textarea id="motivo" name="motivo" rows="3" placeholder="Describa detalladamente el motivo de la devolución..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin: 30px 0 20px 0; color: #2c5aa0; border-bottom: 1px solid #ccc; padding-bottom: 10px;">DATOS BANCARIOS</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="banco">Banco:</label>
+                            <select id="banco" name="banco">
+                                <option value="">Seleccione banco</option>
+                                <option value="banco-chile">Banco de Chile</option>
+                                <option value="banco-estado">BancoEstado</option>
+                                <option value="santander">Santander</option>
+                                <option value="bci">BCI</option>
+                                <option value="scotiabank">Scotiabank</option>
+                                <option value="itau">Itaú</option>
+                                <option value="security">Banco Security</option>
+                                <option value="falabella">Banco Falabella</option>
+                                <option value="ripley">Banco Ripley</option>
+                                <option value="consorcio">Banco Consorcio</option>
+                                <option value="internacional">Banco Internacional</option>
+                                <option value="edwards">Banco Edwards Citi</option>
+                                <option value="bbva">BBVA</option>
+                                <option value="paris">Banco Paris</option>
+                                <option value="mercado-pago">Mercado Pago</option>
+                                <option value="tempo">Tempo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo-cuenta">Tipo de Cuenta:</label>
+                            <select id="tipo-cuenta" name="tipo-cuenta">
+                                <option value="">Seleccione tipo</option>
+                                <option value="corriente">Cuenta Corriente</option>
+                                <option value="vista">Cuenta Vista</option>
+                                <option value="ahorro">Cuenta de Ahorro</option>
+                                <option value="rut">Cuenta RUT</option>
+                                <option value="prepago">Cuenta Prepago</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="numero-cuenta">Número de Cuenta:</label>
+                            <input type="text" id="numero-cuenta" name="numero-cuenta" class="underline-field" placeholder="Número de cuenta">
+                        </div>
+                        <div class="form-group">
+                            <label for="correo">Correo Electrónico:</label>
+                            <input type="email" id="correo" name="correo" class="underline-field" placeholder="correo@ejemplo.com">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group half">
+                            <label for="valor">Valor a Devolver:</label>
+                            <input type="text" id="valor" name="valor" class="underline-field" placeholder="$0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full">
+                            <label for="observaciones">Observaciones del Vendedor:</label>
+                            <textarea id="observaciones" name="observaciones" rows="4" placeholder="Observaciones y comentarios adicionales del vendedor..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="signature-section">
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <strong>Firma Solicitante</strong><br>
+                            <span style="font-size: 11px;" id="nombre-solicitante-firma">Nombre del solicitante</span>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <strong>Firma de Autorización</strong><br>
+                            <span style="font-size: 11px;">Jefe de Ventas / Gerencia</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div id="recepcion" class="form-content">
+            <div class="print-area">
+                <div class="header">
+                    <div class="logo-text">
+                        <span style="font-family: Arial, sans-serif; font-size: 36px; font-weight: normal; color: #2c5aa0;">aroma</span><span style="font-family: Arial, sans-serif; font-size: 36px; font-weight: 300; color: #42A5F5;">maker</span>
+                    </div>
+                    
+                    <div class="company-info">
+                        <div class="form-title">RECEPCIÓN DE MERCADERÍA</div>
+                        <div class="form-subtitle">Control de ingreso y validación de productos</div>
+                    </div>
+                </div>
+                
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rut-cliente-rec">RUT Cliente:</label>
+                            <input type="text" id="rut-cliente-rec" name="rut-cliente-rec" class="underline-field" placeholder="12.345.678-9">
+                        </div>
+                        <div class="form-group">
+                            <label for="nota-venta-rec">Nota de Venta:</label>
+                            <input type="text" id="nota-venta-rec" name="nota-venta-rec" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="doc-asociado-rec">Documento Asociado:</label>
+                            <input type="text" id="doc-asociado-rec" name="doc-asociado-rec" class="underline-field" placeholder="Número de documento">
+                        </div>
+                        <div class="form-group">
+                            <label for="vendedor">Vendedor:</label>
+                            <input type="text" id="vendedor" name="vendedor" class="underline-field" placeholder="Nombre del vendedor">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fecha-recepcion">Fecha de Recepción:</label>
+                            <input type="text" id="fecha-recepcion" name="fecha-recepcion" class="underline-field" placeholder="DD/MM/AAAA">
+                        </div>
+                        <div class="form-group">
+                            <label for="hora-recepcion">Hora:</label>
+                            <input type="text" id="hora-recepcion" name="hora-recepcion" class="underline-field" placeholder="HH:MM">
+                        </div>
+                    </div>
+                    
+                    <div class="table-section">
+                        <h3 style="margin-bottom: 15px; color: #2c5aa0;">DETALLE DE MERCADERÍA RECIBIDA</h3>
+                        <table class="products-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 30%;">Nombre Producto</th>
+                                    <th style="width: 15%;">SKU</th>
+                                    <th style="width: 10%;">Cantidad</th>
+                                    <th style="width: 20%;">Estado Mercadería</th>
+                                    <th style="width: 25%;">Embalaje Completo (Sí/No)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                                <tr><td></td><td></td><td></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full">
+                            <label for="observaciones-bodega">Observaciones de Bodega:</label>
+                            <textarea id="observaciones-bodega" name="observaciones-bodega" rows="4" placeholder="Comentarios adicionales sobre el estado de la mercadería, daños, faltantes, etc."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="signature-section">
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <strong>Firma Vendedor</strong><br>
+                            <span style="font-size: 11px;" id="nombre-vendedor-firma">Nombre del vendedor</span>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <strong>Firma Jefe de Bodega</strong><br>
+                            <span style="font-size: 11px;">Validación y conformidad</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        function showForm(formType) {
+            // Ocultar todos los formularios
+            document.querySelectorAll('.form-content').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // Remover clase active de todos los tabs
+            document.querySelectorAll('.form-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Mostrar el formulario seleccionado
+            document.getElementById(formType).classList.add('active');
+            
+            // Activar el tab correspondiente
+            event.currentTarget.classList.add('active');
+        }
+        
+        // ✨ NUEVA FUNCIÓN para generar IDs
+        function generarIdAlfanumerico(longitud) {
+            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let resultado = '';
+            for (let i = 0; i < longitud; i++) {
+                resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
+            return resultado;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Para formulario de devolución
+            const quienSolicita = document.getElementById('quien-solicita');
+            const nombreSolicitanteFirma = document.getElementById('nombre-solicitante-firma');
+            
+            if (quienSolicita && nombreSolicitanteFirma) {
+                quienSolicita.addEventListener('input', function() {
+                    nombreSolicitanteFirma.textContent = this.value || 'Nombre del solicitante';
+                });
+            }
+            
+            // Para formulario de recepción
+            const vendedor = document.getElementById('vendedor');
+            const nombreVendedorFirma = document.getElementById('nombre-vendedor-firma');
+            
+            if (vendedor && nombreVendedorFirma) {
+                vendedor.addEventListener('input', function() {
+                    nombreVendedorFirma.textContent = this.value || 'Nombre del vendedor';
+                });
+            }
+            
+            // Auto-rellenar fecha actual
+            const fechaRecepcion = document.getElementById('fecha-recepcion');
+            if (fechaRecepcion) {
+                const hoy = new Date();
+                const fecha = String(hoy.getDate()).padStart(2, '0') + '/' + 
+                              String(hoy.getMonth() + 1).padStart(2, '0') + '/' + 
+                              hoy.getFullYear();
+                fechaRecepcion.placeholder = fecha;
+            }
+            
+            const horaRecepcion = document.getElementById('hora-recepcion');
+            if (horaRecepcion) {
+                const ahora = new Date();
+                const hora = String(ahora.getHours()).padStart(2, '0') + ':' + 
+                             String(ahora.getMinutes()).padStart(2, '0');
+                horaRecepcion.placeholder = hora;
+            }
+
+            // ✨ NUEVO CÓDIGO para generar y asignar los IDs al cargar la página
+            const notaVentaDev = document.getElementById('nota-venta');
+            if (notaVentaDev) {
+                notaVentaDev.value = 'DEV-' + generarIdAlfanumerico(8);
+            }
+
+            const notaVentaRec = document.getElementById('nota-venta-rec');
+            if (notaVentaRec) {
+                notaVentaRec.value = 'REC-' + generarIdAlfanumerico(8);
+            }
+        });
+    </script>
+</body>
+</html>
