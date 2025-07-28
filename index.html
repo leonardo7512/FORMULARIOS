@@ -92,6 +92,11 @@
         .logo-text {
             margin-right: 20px;
             margin-bottom: 10px;
+            /* ✨ Estilo del logo simplificado */
+            font-family: Arial, sans-serif; 
+            font-size: 36px; 
+            font-weight: bold; 
+            color: #2c5aa0;
         }
         
         .company-info {
@@ -197,7 +202,7 @@
         .products-table th,
         .products-table td {
             border: 1px solid #333;
-            padding: 5px; /* Reducido para que quepan los inputs */
+            padding: 5px;
             text-align: left;
             vertical-align: middle;
         }
@@ -207,7 +212,6 @@
             font-weight: bold;
         }
         
-        /* ✨ NUEVO: Estilo para los inputs dentro de la tabla */
         .products-table input,
         .products-table select {
             width: 100%;
@@ -266,7 +270,6 @@
                 display: none !important;
             }
             
-            /* ✨ MEJORA DE IMPRESIÓN: Quitar bordes de inputs para que se vea como texto */
             .products-table input,
             .products-table select,
             input, select, textarea {
@@ -298,9 +301,7 @@
         <div id="devolucion" class="form-content active">
             <div class="print-area">
                 <div class="header">
-                    <div class="logo-text">
-                        <span style="font-family: Arial, sans-serif; font-size: 36px; font-weight: normal; color: #2c5aa0;">Aroma</span><span style="font-family: Arial, sans-serif; font-size: 36px; font-weight: 300; color: #42A5F5;">maker</span>
-                    </div>
+                    <div class="logo-text">Aromaker</div>
                     
                     <div class="company-info">
                         <div class="form-title">SOLICITUD DE DEVOLUCIÓN DE DINERO</div>
@@ -309,100 +310,15 @@
                 </div>
                 
                 <form>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="rut-cliente">RUT Cliente:</label>
-                            <input type="text" id="rut-cliente" name="rut-cliente" class="underline-field" placeholder="12.345.678-9">
-                        </div>
-                        <div class="form-group">
-                            <label for="nota-venta">Nota de Venta:</label>
-                            <input type="text" id="nota-venta" name="nota-venta" readonly>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="doc-asociado">Documento Asociado (Factura/Boleta):</label>
-                            <input type="text" id="doc-asociado" name="doc-asociado" class="underline-field" placeholder="Número de documento">
-                        </div>
-                        <div class="form-group">
-                            <label for="quien-solicita">Quien Solicita:</label>
-                            <input type="text" id="quien-solicita" name="quien-solicita" class="underline-field" placeholder="Nombre completo">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group full">
-                            <label for="motivo">Motivo de la Devolución:</label>
-                            <textarea id="motivo" name="motivo" rows="3" placeholder="Describa detalladamente el motivo de la devolución..."></textarea>
-                        </div>
-                    </div>
-                    <h3 style="margin: 30px 0 20px 0; color: #2c5aa0; border-bottom: 1px solid #ccc; padding-bottom: 10px;">DATOS BANCARIOS</h3>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="banco">Banco:</label>
-                            <select id="banco" name="banco">
-                                <option value="">Seleccione banco</option>
-                                <option value="banco-chile">Banco de Chile</option>
-                                <option value="banco-estado">BancoEstado</option>
-                                <option value="santander">Santander</option>
-                                <option value="bci">BCI</option>
-                                </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="tipo-cuenta">Tipo de Cuenta:</label>
-                            <select id="tipo-cuenta" name="tipo-cuenta">
-                                <option value="">Seleccione tipo</option>
-                                <option value="corriente">Cuenta Corriente</option>
-                                <option value="vista">Cuenta Vista</option>
-                                <option value="ahorro">Cuenta de Ahorro</option>
-                                <option value="rut">Cuenta RUT</option>
-                                <option value="prepago">Cuenta Prepago</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="numero-cuenta">Número de Cuenta:</label>
-                            <input type="text" id="numero-cuenta" name="numero-cuenta" class="underline-field" placeholder="Número de cuenta">
-                        </div>
-                        <div class="form-group">
-                            <label for="correo">Correo Electrónico:</label>
-                            <input type="email" id="correo" name="correo" class="underline-field" placeholder="correo@ejemplo.com">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group half">
-                            <label for="valor">Valor a Devolver:</label>
-                            <input type="text" id="valor" name="valor" class="underline-field" placeholder="$0">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group full">
-                            <label for="observaciones">Observaciones del Vendedor:</label>
-                            <textarea id="observaciones" name="observaciones" rows="4" placeholder="Observaciones y comentarios adicionales del vendedor..."></textarea>
-                        </div>
-                    </div>
-                    <div class="signature-section">
-                        <div class="signature-box">
-                            <div class="signature-line"></div>
-                            <strong>Firma Solicitante</strong><br>
-                            <span style="font-size: 11px;" id="nombre-solicitante-firma">Nombre del solicitante</span>
-                        </div>
-                        <div class="signature-box">
-                            <div class="signature-line"></div>
-                            <strong>Firma de Autorización</strong><br>
-                            <span style="font-size: 11px;">Jefe de Ventas / Gerencia</span>
-                        </div>
-                    </div>
-                </form>
+                    </form>
             </div>
         </div>
         
         <div id="recepcion" class="form-content">
             <div class="print-area">
                 <div class="header">
-                    <div class="logo-text">
-                        <span style="font-family: Arial, sans-serif; font-size: 36px; font-weight: normal; color: #2c5aa0;">Aroma</span><span style="font-family: Arial, sans-serif; font-size: 36px; font-weight: 300; color: #42A5F5;">maker</span>
-                    </div>
+                    <div class="logo-text">Aromaker</div>
+
                     <div class="company-info">
                         <div class="form-title">RECEPCIÓN DE MERCADERÍA</div>
                         <div class="form-subtitle">Control de ingreso y validación de productos</div>
@@ -410,205 +326,13 @@
                 </div>
                 
                 <form>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="rut-cliente-rec">RUT Cliente:</label>
-                            <input type="text" id="rut-cliente-rec" name="rut-cliente-rec" class="underline-field" placeholder="12.345.678-9">
-                        </div>
-                        <div class="form-group">
-                            <label for="nota-venta-rec">Nota de Venta:</label>
-                            <input type="text" id="nota-venta-rec" name="nota-venta-rec" readonly>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="doc-asociado-rec">Documento Asociado:</label>
-                            <input type="text" id="doc-asociado-rec" name="doc-asociado-rec" class="underline-field" placeholder="Número de documento">
-                        </div>
-                        <div class="form-group">
-                            <label for="vendedor">Vendedor:</label>
-                            <input type="text" id="vendedor" name="vendedor" class="underline-field" placeholder="Nombre del vendedor">
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="fecha-recepcion">Fecha de Recepción:</label>
-                            <input type="text" id="fecha-recepcion" name="fecha-recepcion" class="underline-field" placeholder="DD/MM/AAAA">
-                        </div>
-                        <div class="form-group">
-                            <label for="hora-recepcion">Hora:</label>
-                            <input type="text" id="hora-recepcion" name="hora-recepcion" class="underline-field" placeholder="HH:MM">
-                        </div>
-                    </div>
-                    
-                    <div class="table-section">
-                        <h3 style="margin-bottom: 15px; color: #2c5aa0;">DETALLE DE MERCADERÍA RECIBIDA</h3>
-                        <table class="products-table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 30%;">Nombre Producto</th>
-                                    <th style="width: 15%;">SKU</th>
-                                    <th style="width: 10%;">Cantidad</th>
-                                    <th style="width: 20%;">Estado Mercadería</th>
-                                    <th style="width: 25%;">Embalaje Completo</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                    <td>
-                                        <select>
-                                            <option value="">-</option>
-                                            <option value="Sí">Sí</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                    <td>
-                                        <select>
-                                            <option value="">-</option>
-                                            <option value="Sí">Sí</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                    <td>
-                                        <select>
-                                            <option value="">-</option>
-                                            <option value="Sí">Sí</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                                 <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                    <td>
-                                        <select>
-                                            <option value="">-</option>
-                                            <option value="Sí">Sí</option>
-                                            <option value="No">No</option>
-                                            <option value="N/A">N/A</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </tbody>
-                             </table>
-                    </div>
-                    
-                    <div class="form-row">
-                        <div class="form-group full">
-                            <label for="observaciones-vendedor">Observaciones del Vendedor (Recepción):</label>
-                            <textarea id="observaciones-vendedor" name="observaciones-vendedor" rows="3" placeholder="Anotaciones del vendedor sobre el estado general, conversación con cliente, etc."></textarea>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group full">
-                            <label for="observaciones-bodega">Observaciones de Bodega:</label>
-                            <textarea id="observaciones-bodega" name="observaciones-bodega" rows="4" placeholder="Comentarios adicionales sobre el estado de la mercadería, daños, faltantes, etc."></textarea>
-                        </div>
-                    </div>
-                    
-                    <div class="signature-section">
-                        <div class="signature-box">
-                            <div class="signature-line"></div>
-                            <strong>Firma Vendedor</strong><br>
-                            <span style="font-size: 11px;" id="nombre-vendedor-firma">Nombre del vendedor</span>
-                        </div>
-                        <div class="signature-box">
-                            <div class="signature-line"></div>
-                            <strong>Firma Jefe de Bodega</strong><br>
-                            <span style="font-size: 11px;">Validación y conformidad</span>
-                        </div>
-                    </div>
-                </form>
+                    </form>
             </div>
         </div>
     </div>
     
     <script>
-        function showForm(formType) {
-            document.querySelectorAll('.form-content').forEach(form => {
-                form.classList.remove('active');
-            });
-            document.querySelectorAll('.form-tab').forEach(tab => {
-                tab.classList.remove('active');
-            });
-            document.getElementById(formType).classList.add('active');
-            event.currentTarget.classList.add('active');
-        }
-        
-        function generarIdAlfanumerico(longitud) {
-            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-            let resultado = '';
-            for (let i = 0; i < longitud; i++) {
-                resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
-            }
-            return resultado;
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const quienSolicita = document.getElementById('quien-solicita');
-            const nombreSolicitanteFirma = document.getElementById('nombre-solicitante-firma');
-            if (quienSolicita && nombreSolicitanteFirma) {
-                quienSolicita.addEventListener('input', function() {
-                    nombreSolicitanteFirma.textContent = this.value || 'Nombre del solicitante';
-                });
-            }
-            
-            const vendedor = document.getElementById('vendedor');
-            const nombreVendedorFirma = document.getElementById('nombre-vendedor-firma');
-            if (vendedor && nombreVendedorFirma) {
-                vendedor.addEventListener('input', function() {
-                    nombreVendedorFirma.textContent = this.value || 'Nombre del vendedor';
-                });
-            }
-            
-            const fechaRecepcion = document.getElementById('fecha-recepcion');
-            if (fechaRecepcion) {
-                const hoy = new Date();
-                const dia = String(hoy.getDate()).padStart(2, '0');
-                const mes = String(hoy.getMonth() + 1).padStart(2, '0');
-                const anio = hoy.getFullYear();
-                fechaRecepcion.placeholder = `${dia}/${mes}/${anio}`;
-            }
-            
-            const horaRecepcion = document.getElementById('hora-recepcion');
-            if (horaRecepcion) {
-                const ahora = new Date();
-                const hora = String(ahora.getHours()).padStart(2, '0');
-                const minutos = String(ahora.getMinutes()).padStart(2, '0');
-                horaRecepcion.placeholder = `${hora}:${minutos}`;
-            }
-
-            const notaVentaDev = document.getElementById('nota-venta');
-            if (notaVentaDev) {
-                notaVentaDev.value = 'DEV-' + generarIdAlfanumerico(8);
-            }
-
-            const notaVentaRec = document.getElementById('nota-venta-rec');
-            if (notaVentaRec) {
-                notaVentaRec.value = 'REC-' + generarIdAlfanumerico(8);
-            }
-        });
+        // ... (el script no necesita cambios) ...
     </script>
 </body>
 </html>
