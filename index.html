@@ -37,8 +37,6 @@
         .products-table th, .products-table td { border: 1px solid #333; padding: 5px; text-align: left; vertical-align: middle; height: 40px; }
         .products-table th { background-color: #f0f0f0; font-weight: bold; height: auto;}
         .products-table input, .products-table select { width: 100%; border: 1px solid #ddd; padding: 4px; font-size: 11px; }
-        .print-btn { position: fixed; top: 20px; right: 20px; background: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; z-index: 1000; }
-        .print-btn:hover { background: #1e3d6f; }
         .action-buttons { margin-top: 40px; text-align: right; }
         .action-buttons button { background: #2c5aa0; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 10px; }
         .action-buttons button.print-only { background-color: #6c757d; }
@@ -60,11 +58,11 @@
             .products-table input, .products-table select, input, select { border: none !important; background-color: white !important; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 9.5pt; }
             .underline-field { border-bottom: 1px solid #333 !important; }
             input[readonly] { background-color: #f0f0f0 !important; }
+            .print-btn { display: none; } /* Oculta el botón superior al imprimir */
         }
     </style>
 </head>
 <body>
-    <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
     
     <div class="container">
         <div class="form-selector">
