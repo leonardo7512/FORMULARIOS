@@ -8,8 +8,8 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px; }
         .container { max-width: 800px; margin: 0 auto; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); overflow: hidden; }
-        .form-selector { display: flex; background: #e0e0e0; flex-wrap: wrap; }
-        .form-tab { flex: 1; min-width: 200px; padding: 15px; text-align: center; cursor: pointer; background: #e0e0e0; border: none; font-size: 16px; font-weight: bold; transition: background 0.3s; }
+        .form-selector { display: flex; background: #e0e0e0; }
+        .form-tab { flex: 1; padding: 15px; text-align: center; cursor: pointer; background: #e0e0e0; border: none; font-size: 16px; font-weight: bold; transition: background 0.3s; }
         .form-tab.active { background: white; color: #2c5aa0; }
         .form-tab:hover { background: #d0d0d0; }
         .form-tab.active:hover { background: white; }
@@ -23,6 +23,7 @@
         .form-subtitle { font-size: 14px; color: #666; }
         .form-row { display: flex; margin-bottom: 20px; gap: 20px; }
         .form-group { flex: 1; }
+        .form-group.full { flex: 1 1 100%; }
         label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
         input[type="text"], input[type="email"], input[type="number"], select, textarea { width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px; font-size: 12px; }
         input[readonly] { background-color: #f0f0f0; cursor: not-allowed; color: #555; font-weight: bold; }
@@ -36,110 +37,599 @@
         .products-table th, .products-table td { border: 1px solid #333; padding: 5px; text-align: left; vertical-align: middle; height: 40px; }
         .products-table th { background-color: #f0f0f0; font-weight: bold; height: auto;}
         .products-table input, .products-table select { width: 100%; border: 1px solid #ddd; padding: 4px; font-size: 11px; }
+        .print-btn { position: fixed; top: 20px; right: 20px; background: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; z-index: 1000; }
+        .print-btn:hover { background: #1e3d6f; }
         .action-buttons { margin-top: 40px; text-align: right; }
         .action-buttons button { background: #2c5aa0; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 10px; }
         .action-buttons button.print-only { background-color: #6c757d; }
+        
+        @media print {
+            body { background: white; padding: 0; margin: 0; font-size: 9.5pt; line-height: 1.15; }
+            .container { box-shadow: none; border-radius: 0; max-width: none; }
+            .form-selector, .print-btn, .form-content:not(.active), .action-buttons { display: none !important; }
+            .form-content.active { display: block !important; padding: 0; }
+            .print-area { width: 100%; min-height: auto; padding: 0.4in; margin: 0; }
+            .header { margin-bottom: 12px; padding-bottom: 8px; }
+            .form-row { margin-bottom: 8px; }
+            .table-section { margin: 12px 0; }
+            .products-table th, .products-table td { padding: 3px; height: 30px !important; }
+            .signature-section { margin-top: 20px; page-break-inside: avoid; }
+            .signature-line { height: 35px !important; margin-bottom: 5px;}
+            h3 { margin: 12px 0 8px 0 !important; }
+            textarea { min-height: 30px !important; border: 1px solid #ccc !important; }
+            .products-table input, .products-table select, input, select { border: none !important; background-color: white !important; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 9.5pt; }
+            .underline-field { border-bottom: 1px solid #333 !important; }
+            input[readonly] { background-color: #f0f0f0 !important; }
+        }
     </style>
 </head>
 <body>
+    <button class="print-btn" onclick="window.print()">🖨️ Imprimir</button>
     
     <div class="container">
         <div class="form-selector">
-            <button class="form-tab active" onclick="showForm('devolucion')">📋 Devolución de Dinero</button>
-            <button class="form-tab" onclick="showForm('recepcion')">📦 Recepción de Mercadería</button>
+            <button class="form-tab active" onclick="showForm('devolucion')">📋 Formulario de Devolución de Dinero</button>
+            <button class="form-tab" onclick="showForm('recepcion')">📦 Formulario de Recepción de Mercadería</button>
             <button class="form-tab" onclick="showForm('analisis')">📊 Petición de Análisis de Precios</button>
         </div>
         
         <div id="devolucion" class="form-content active">
-             <div class="print-area">
-                <div class="action-buttons">
-                    <button class="print-only" onclick="window.print()">🖨️ Imprimir</button>
+            <div class="print-area">
+                <div class="header">
+                    <div class="logo-text">Aromaker</div>
+                    <div class="company-info">
+                        <div class="form-title">SOLICITUD DE DEVOLUCIÓN DE DINERO</div>
+                        <div class="form-subtitle">Formulario para procesamiento de reembolsos</div>
+                    </div>
                 </div>
-             </div>
+                <form id="form-devolucion" method="POST" action="https://script.google.com/macros/s/AKfycbwfyvYojmS7R4hZZr4Yn-K7NZ398VifjpVKSTi4U3mgd4kcIHJVqsK1pAVDznngs6-K5Q/exec" target="_blank">
+                    <input type="hidden" name="formType" value="devolucion">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fecha-devolucion">Fecha de Solicitud:</label>
+                            <input type="text" id="fecha-devolucion" name="fechaDevolucion" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="hora-devolucion">Hora de Solicitud:</label>
+                            <input type="text" id="hora-devolucion" name="horaDevolucion" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rut-cliente">RUT Cliente:</label>
+                            <input type="text" id="rut-cliente" name="rutCliente" class="underline-field" placeholder="12.345.678-9">
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre-cliente-dev">Nombre Cliente:</label>
+                            <input type="text" id="nombre-cliente-dev" name="nombreCliente" class="underline-field" placeholder="Nombre completo del cliente">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nota-venta">ID de Solicitud:</label>
+                            <input type="text" id="nota-venta" name="idDevolucion" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="quien-solicita">Quien Solicita (Nombre):</label>
+                            <input type="text" id="quien-solicita" name="quienSolicita" class="underline-field" placeholder="Nombre de quien llena el formulario">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 0.4;">
+                            <label for="tipo-doc-dev">Tipo Documento:</label>
+                            <select id="tipo-doc-dev" name="tipoDocOriginal">
+                                <option>Nota de Venta</option>
+                                <option>Boleta</option>
+                                <option>Factura</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 0.6;">
+                            <label for="numero-doc-dev">Nº Documento Asociado:</label>
+                            <input type="text" id="numero-doc-dev" name="numDocOriginal" class="underline-field" placeholder="Número del documento">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full">
+                            <label for="motivo">Motivo de la Devolución:</label>
+                            <textarea id="motivo" name="motivoDevolucion" rows="3" placeholder="Describa detalladamente el motivo..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <h3 style="margin: 20px 0 15px 0; color: #2c5aa0; border-bottom: 1px solid #ccc; padding-bottom: 8px;">DATOS BANCARIOS PARA REEMBOLSO</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="banco">Banco:</label>
+                            <select id="banco" name="banco">
+                                <option value="">Seleccione banco</option>
+                                <option>Banco de Chile</option>
+                                <option>BancoEstado</option>
+                                <option>Santander</option>
+                                <option>BCI</option>
+                                <option>Scotiabank</option>
+                                <option>Itaú</option>
+                                <option>Banco Security</option>
+                                <option>Banco Falabella</option>
+                                <option>Banco Ripley</option>
+                                <option>Banco Consorcio</option>
+                                <option>Banco Internacional</option>
+                                <option>Banco Edwards Citi</option>
+                                <option>BBVA</option>
+                                <option>Banco Paris</option>
+                                <option>Mercado Pago</option>
+                                <option>Tempo</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="tipo-cuenta">Tipo de Cuenta:</label>
+                            <select id="tipo-cuenta" name="tipoCuenta">
+                                <option value="">Seleccione tipo</option>
+                                <option>Cuenta Corriente</option>
+                                <option>Cuenta Vista</option>
+                                <option>Cuenta de Ahorro</option>
+                                <option>Cuenta RUT</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="numero-cuenta">Número de Cuenta:</label>
+                            <input type="text" id="numero-cuenta" name="numeroCuenta" class="underline-field" placeholder="Número de cuenta">
+                        </div>
+                        <div class="form-group">
+                            <label for="correo">Correo Electrónico:</label>
+                            <input type="email" id="correo" name="correo" class="underline-field" placeholder="correo@ejemplo.com">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 0.5;">
+                            <label for="valor">Valor a Devolver:</label>
+                            <input type="text" id="valor" name="montoDevolucion" class="underline-field" placeholder="$0">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full">
+                            <label for="observaciones">Observaciones Adicionales:</label>
+                            <textarea id="observaciones" name="observaciones" rows="3" placeholder="Comentarios adicionales..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <input type="hidden" name="productos" id="hidden-productos-dev" value="">
+                    
+                    <div class="action-buttons">
+                        <button type="button" class="print-only" onclick="window.print()">🖨️ Sólo Imprimir</button>
+                        <button type="submit">💾 Guardar en Sheets</button>
+                    </div>
+                    
+                    <div class="signature-section">
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <strong>Firma Solicitante</strong><br>
+                            <span style="font-size: 11px;" id="nombre-solicitante-firma">Nombre del solicitante</span>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <strong>Firma de Autorización</strong><br>
+                            <span style="font-size: 11px;">Jefe de Ventas / Gerencia</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
         
         <div id="recepcion" class="form-content">
             <div class="print-area">
+                <div class="header">
+                    <div class="logo-text">Aromaker</div>
+                    <div class="company-info">
+                        <div class="form-title">RECEPCIÓN DE MERCADERÍA</div>
+                        <div class="form-subtitle">Control de ingreso y validación de productos</div>
+                    </div>
+                </div>
                 <form id="form-recepcion" method="POST" action="https://script.google.com/macros/s/AKfycbwfyvYojmS7R4hZZr4Yn-K7NZ398VifjpVKSTi4U3mgd4kcIHJVqsK1pAVDznngs6-K5Q/exec" target="_blank">
                     <input type="hidden" name="formType" value="recepcion">
-                    <div class="header">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rut-cliente-rec">RUT Cliente/Proveedor:</label>
+                            <input type="text" id="rut-cliente-rec" name="rutProveedor" class="underline-field" placeholder="RUT">
                         </div>
-                    <div class="form-row">
-                        <div class="form-group"><label for="rut-cliente-rec">RUT Cliente/Proveedor:</label><input type="text" id="rut-cliente-rec" name="rutProveedor" class="underline-field"></div>
-                        <div class="form-group"><label for="nombre-cliente-rec">Nombre Cliente/Proveedor:</label><input type="text" id="nombre-cliente-rec" name="nombreProveedor" class="underline-field"></div>
+                        <div class="form-group">
+                            <label for="nombre-cliente-rec">Nombre Cliente/Proveedor:</label>
+                            <input type="text" id="nombre-cliente-rec" name="nombreProveedor" class="underline-field" placeholder="Nombre completo">
+                        </div>
                     </div>
+                    
                     <div class="form-row">
-                        <div class="form-group"><label for="nota-venta-rec">ID de Recepción:</label><input type="text" id="nota-venta-rec" name="idRecepcion" readonly></div>
-                        <div class="form-group"><label for="vendedor">Receptor (Nombre):</label><input type="text" id="vendedor" name="receptor" class="underline-field"></div>
+                        <div class="form-group">
+                            <label for="nota-venta-rec">ID de Recepción:</label>
+                            <input type="text" id="nota-venta-rec" name="idRecepcion" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="vendedor">Receptor (Nombre):</label>
+                            <input type="text" id="vendedor" name="receptor" class="underline-field" placeholder="Nombre del receptor">
+                        </div>
                     </div>
+                    
                     <div class="form-row">
-                        <div class="form-group" style="flex: 0.4;"><label for="tipo-doc-rec">Tipo Documento:</label><select id="tipo-doc-rec" name="tipoDoc"><option>Guía de Despacho</option><option>Factura</option><option>Boleta</option><option>Nota de Venta</option></select></div>
-                        <div class="form-group" style="flex: 0.6;"><label for="numero-doc-rec">Nº Documento Asociado:</label><input type="text" id="numero-doc-rec" name="numDoc" class="underline-field"></div>
+                        <div class="form-group" style="flex: 0.4;">
+                            <label for="tipo-doc-rec">Tipo Documento:</label>
+                            <select id="tipo-doc-rec" name="tipoDoc">
+                                <option>Guía de Despacho</option>
+                                <option>Factura</option>
+                                <option>Boleta</option>
+                                <option>Nota de Venta</option>
+                            </select>
+                        </div>
+                        <div class="form-group" style="flex: 0.6;">
+                            <label for="numero-doc-rec">Nº Documento Asociado:</label>
+                            <input type="text" id="numero-doc-rec" name="numDoc" class="underline-field" placeholder="Número del documento">
+                        </div>
                     </div>
-                     <div class="form-row">
-                        <div class="form-group"><label for="fecha-recepcion">Fecha de Recepción:</label><input type="text" id="fecha-recepcion" name="fechaRecepcion" readonly></div>
-                        <div class="form-group"><label for="hora-recepcion">Hora de Recepción:</label><input type="text" id="hora-recepcion" name="horaRecepcion" readonly></div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fecha-recepcion">Fecha de Recepción:</label>
+                            <input type="text" id="fecha-recepcion" name="fechaRecepcion" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="hora-recepcion">Hora de Recepción:</label>
+                            <input type="text" id="hora-recepcion" name="horaRecepcion" readonly>
+                        </div>
                     </div>
                     
                     <div class="table-section">
                         <h3 style="margin-bottom: 15px; color: #2c5aa0;">DETALLE DE MERCADERÍA RECIBIDA</h3>
                         <table class="products-table" id="tabla-recepcion">
-                            </table>
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%;">Nombre Producto</th>
+                                    <th style="width: 10%;">SKU</th>
+                                    <th style="width: 10%;">Cantidad</th>
+                                    <th style="width: 15%;">Precio Sugerido</th>
+                                    <th style="width: 15%;">Precio Competencia</th>
+                                    <th style="width: 30%;">Observaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
+                    
                     <input type="hidden" name="productos" id="hidden-productos-rec">
-
+                    
                     <div class="form-row">
-                        <div class="form-group full"><label for="observaciones-vendedor">Observaciones del Receptor:</label><textarea id="observaciones-vendedor" name="obsReceptor" rows="3"></textarea></div>
+                        <div class="form-group full">
+                            <label for="observaciones-vendedor">Observaciones del Receptor:</label>
+                            <textarea id="observaciones-vendedor" name="obsReceptor" rows="3"></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group full">
+                            <label for="observaciones-bodega">Observaciones de Bodega:</label>
+                            <textarea id="observaciones-bodega" name="obsBodega" rows="3"></textarea>
+                        </div>
                     </div>
                     
                     <div class="action-buttons">
-                        <button type="button" class="print-only" onclick="window.print()">🖨️ Sólo Imprimir</button>
-                        <button type="submit">💾 Guardar en Sheets</button>
+                        <button type="submit" onclick="setTimeout(() => window.print(), 500)">💾 Imprimir y Guardar</button>
                     </div>
-
+                    
                     <div class="signature-section">
-                         </div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <strong>Firma Receptor</strong><br>
+                            <span style="font-size: 11px;" id="nombre-vendedor-firma">Nombre del receptor</span>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <strong>Firma Jefe de Bodega</strong><br>
+                            <span style="font-size: 11px;">Validación y conformidad</span>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
 
         <div id="analisis" class="form-content">
-           <div class="print-area">
+            <div class="print-area">
+                <div class="header">
+                    <div class="logo-text">Aromaker</div>
+                    <div class="company-info">
+                        <div class="form-title">PETICIÓN DE ANÁLISIS DE PRECIOS</div>
+                        <div class="form-subtitle">Formulario interno para evaluación de cotizaciones</div>
+                    </div>
+                </div>
                 <form id="form-analisis" method="POST" action="https://script.google.com/macros/s/AKfycbwfyvYojmS7R4hZZr4Yn-K7NZ398VifjpVKSTi4U3mgd4kcIHJVqsK1pAVDznngs6-K5Q/exec" target="_blank">
                     <input type="hidden" name="formType" value="analisis">
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="fecha-peticion">Fecha de Petición:</label>
+                            <input type="text" id="fecha-peticion" name="fechaPeticion" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="hora-peticion">Hora de Petición:</label>
+                            <input type="text" id="hora-peticion" name="horaPeticion" readonly>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="id-peticion">ID de Petición:</label>
+                            <input type="text" id="id-peticion" name="idPeticion" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="vendedor-an">Vendedor:</label>
+                            <input type="text" id="vendedor-an" name="vendedor" class="underline-field" placeholder="Nombre del vendedor">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="rut-cliente-an">RUT Cliente:</label>
+                            <input type="text" id="rut-cliente-an" name="rutCliente" class="underline-field" placeholder="12.345.678-9">
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre-cliente-an">Nombre Cliente:</label>
+                            <input type="text" id="nombre-cliente-an" name="nombreCliente" class="underline-field" placeholder="Nombre completo del cliente">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="web-rrss">Canal de Contacto:</label>
+                            <select id="web-rrss" name="webRrss">
+                                <option>Web</option>
+                                <option>Instagram</option>
+                                <option>Facebook</option>
+                                <option>WhatsApp</option>
+                                <option>Presencial</option>
+                                <option>Teléfono</option>
+                                <option>Email</option>
+                                <option>Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="perfil-cliente">Perfil del Cliente:</label>
+                            <select id="perfil-cliente" name="perfilCliente">
+                                <option>Empresa</option>
+                                <option>Particular</option>
+                                <option>Revendedor</option>
+                                <option>Institución</option>
+                                <option>Gobierno</option>
+                                <option>Otro</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="metodo-venta">Método de Venta:</label>
+                            <select id="metodo-venta" name="metodoVenta">
+                                <option>Venta Directa</option>
+                                <option>Cotización</option>
+                                <option>Licitación</option>
+                                <option>Convenio</option>
+                                <option>Otro</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="num-cotizacion">Nº Cotización (si aplica):</label>
+                            <input type="text" id="num-cotizacion" name="numCotizacion" class="underline-field" placeholder="Número de cotización">
+                        </div>
+                    </div>
+                    
+                    <div class="table-section">
+                        <h3 style="margin-bottom: 15px; color: #2c5aa0;">PRODUCTOS A ANALIZAR</h3>
+                        <table class="products-table" id="tabla-analisis">
+                            <thead>
+                                <tr>
+                                    <th style="width: 20%;">Nombre Producto</th>
+                                    <th style="width: 10%;">SKU</th>
+                                    <th style="width: 10%;">Cantidad</th>
+                                    <th style="width: 15%;">Precio Sugerido</th>
+                                    <th style="width: 15%;">Precio Competencia</th>
+                                    <th style="width: 30%;">Observaciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
                     <input type="hidden" name="productos" id="hidden-productos-an">
-
+                    
+                    <div class="form-row">
+                        <div class="form-group full">
+                            <label for="observaciones-vendedor-an">Observaciones del Vendedor:</label>
+                            <textarea id="observaciones-vendedor-an" name="obsVendedor" rows="3" placeholder="Comentarios adicionales sobre la petición..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="urgencia">Urgencia:</label>
+                            <select id="urgencia" name="urgencia">
+                                <option>Normal</option>
+                                <option>Alta</option>
+                                <option>Urgente</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="respuesta-esperada">Respuesta esperada para:</label>
+                            <input type="text" id="respuesta-esperada" name="respuestaEsperada" class="underline-field" placeholder="DD/MM/AAAA">
+                        </div>
+                    </div>
+                    
                     <div class="action-buttons">
                         <button type="button" class="print-only" onclick="window.print()">🖨️ Sólo Imprimir</button>
                         <button type="submit">💾 Guardar en Sheets</button>
                     </div>
                     
                     <div class="signature-section">
-                         </div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <strong>Firma Vendedor</strong><br>
+                            <span style="font-size: 11px;" id="nombre-vendedor-analisis">Nombre del vendedor</span>
+                        </div>
+                        <div class="signature-box">
+                            <div class="signature-line"></div>
+                            <strong>Revisado por</strong><br>
+                            <span style="font-size: 11px;">Departamento de Precios</span>
+                        </div>
+                    </div>
                 </form>
-           </div>
+            </div>
         </div>
     </div>
     
     <script>
-        // URL de tu Web App de Google Apps Script. ¡DEBES REEMPLAZARLA EN AMBOS FORMULARIOS HTML!
-        // const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwfyvYojmS7R4hZZr4Yn-K7NZ398VifjpVKSTi4U3mgd4kcIHJVqsK1pAVDznngs6-K5Q/exec"; // Ya no se usa aquí
-
         function showForm(formType) {
             document.querySelectorAll('.form-content').forEach(form => form.classList.remove('active'));
             document.querySelectorAll('.form-tab').forEach(tab => tab.classList.remove('active'));
             document.getElementById(formType).classList.add('active');
             event.currentTarget.classList.add('active');
         }
+        
+        function generarIdAlfanumerico(longitud) {
+            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let resultado = '';
+            for (let i = 0; i < longitud; i++) {
+                resultado += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
+            return resultado;
+        }
 
-        // Esta función auxiliar se mantiene para recolectar datos de las tablas
+        // Función para recolectar datos de las tablas
         function getTableData(tableId) {
             const table = document.getElementById(tableId);
             const data = [];
             const rows = table.querySelectorAll('tbody tr');
             rows.forEach(row => {
                 const rowData = [];
-                const cells = row.querySelectorAll('td input');
+                const cells = row.querySelectorAll('input, select');
                 let hasData = false;
                 cells.forEach(cell => {
                     rowData.push(cell.value);
@@ -152,25 +642,68 @@
             return data.join('\n');
         }
         
-        // Antes de enviar un formulario, esta función toma los datos de la tabla y los pone en el campo oculto
+        // Preparar formularios antes del envío
         function prepararFormularioParaEnvio(formId, tableId, hiddenInputId) {
-            const tableData = getTableData(tableId);
-            document.getElementById(hiddenInputId).value = tableData;
+            if (tableId) {
+                const tableData = getTableData(tableId);
+                document.getElementById(hiddenInputId).value = tableData;
+            }
         }
 
-        // Añadimos un 'listener' a cada formulario para que llame a la función de preparación antes del envío
-        document.getElementById('form-recepcion').addEventListener('submit', function() {
+        // Event listeners para cada formulario
+        document.getElementById('form-devolucion').addEventListener('submit', function(e) {
+            // Para devolución no hay tabla de productos
+            document.getElementById('hidden-productos-dev').value = '';
+        });
+
+        document.getElementById('form-recepcion').addEventListener('submit', function(e) {
             prepararFormularioParaEnvio('form-recepcion', 'tabla-recepcion', 'hidden-productos-rec');
         });
 
-        document.getElementById('form-analisis').addEventListener('submit', function() {
+        document.getElementById('form-analisis').addEventListener('submit', function(e) {
             prepararFormularioParaEnvio('form-analisis', 'tabla-analisis', 'hidden-productos-an');
         });
 
-
-        // Lógica para IDs y fechas se mantiene igual
         document.addEventListener('DOMContentLoaded', function() {
-            // ... (toda la lógica para generar IDs y fechas se mantiene sin cambios) ...
+            const hoy = new Date();
+            const fechaActual = String(hoy.getDate()).padStart(2, '0') + '/' + String(hoy.getMonth() + 1).padStart(2, '0') + '/' + hoy.getFullYear();
+            const horaActual = String(hoy.getHours()).padStart(2, '0') + ':' + String(hoy.getMinutes()).padStart(2, '0');
+
+            // Inicializar formulario de Devolución
+            const quienSolicita = document.getElementById('quien-solicita');
+            const nombreSolicitanteFirma = document.getElementById('nombre-solicitante-firma');
+            if (quienSolicita) {
+                quienSolicita.addEventListener('input', function() {
+                    nombreSolicitanteFirma.textContent = this.value || 'Nombre del solicitante';
+                });
+            }
+            document.getElementById('nota-venta').value = 'DEV-' + generarIdAlfanumerico(8);
+            document.getElementById('fecha-devolucion').value = fechaActual;
+            document.getElementById('hora-devolucion').value = horaActual;
+
+            // Inicializar formulario de Recepción
+            const vendedor = document.getElementById('vendedor');
+            const nombreVendedorFirma = document.getElementById('nombre-vendedor-firma');
+            if (vendedor) {
+                vendedor.addEventListener('input', function() {
+                    nombreVendedorFirma.textContent = this.value || 'Nombre del receptor';
+                });
+            }
+            document.getElementById('nota-venta-rec').value = 'REC-' + generarIdAlfanumerico(8);
+            document.getElementById('fecha-recepcion').value = fechaActual;
+            document.getElementById('hora-recepcion').value = horaActual;
+
+            // Inicializar formulario de Análisis de Precios
+            const vendedorAnalisis = document.getElementById('vendedor-an');
+            const nombreVendedorAnalisis = document.getElementById('nombre-vendedor-analisis');
+            if (vendedorAnalisis) {
+                vendedorAnalisis.addEventListener('input', function() {
+                    nombreVendedorAnalisis.textContent = this.value || 'Nombre del vendedor';
+                });
+            }
+            document.getElementById('id-peticion').value = 'PET-' + generarIdAlfanumerico(8);
+            document.getElementById('fecha-peticion').value = fechaActual;
+            document.getElementById('hora-peticion').value = horaActual;
         });
     </script>
 </body>
