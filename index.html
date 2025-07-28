@@ -33,15 +33,15 @@
         .signature-line { border-bottom: 1px solid #333; height: 50px; margin-bottom: 10px; }
         .table-section { margin: 30px 0; }
         .products-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .products-table th, .products-table td { border: 1px solid #333; padding: 5px; text-align: left; vertical-align: middle; }
-        .products-table th { background-color: #f0f0f0; font-weight: bold; }
+        .products-table th, .products-table td { border: 1px solid #333; padding: 5px; text-align: left; vertical-align: middle; height: 40px; }
+        .products-table th { background-color: #f0f0f0; font-weight: bold; height: auto;}
         .products-table input, .products-table select { width: 100%; border: 1px solid #ddd; padding: 4px; font-size: 11px; }
         .print-btn { position: fixed; top: 20px; right: 20px; background: #2c5aa0; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 14px; z-index: 1000; }
         .print-btn:hover { background: #1e3d6f; }
         
-        /* ✨ INICIO: CSS DE IMPRESIÓN CORREGIDO */
+        /* ✨ INICIO: CSS DE IMPRESIÓN CORREGIDO Y AJUSTADO PARA TAMAÑO CARTA */
         @media print {
-            body { background: white; padding: 0; margin: 0; font-size: 10pt; line-height: 1.2; }
+            body { background: white; padding: 0; margin: 0; font-size: 9.5pt; line-height: 1.15; }
             .container { box-shadow: none; border-radius: 0; max-width: none; }
             
             /* Oculta todo lo que no es el formulario activo */
@@ -49,29 +49,23 @@
                 display: none !important;
             }
 
-            .form-content.active {
-                display: block !important;
-                padding: 0;
-            }
-
-            .print-area { width: 100%; min-height: auto; padding: 0.5in; margin: 0; }
-            .header { margin-bottom: 15px; padding-bottom: 10px; }
-            .form-row { margin-bottom: 10px; }
-            .table-section { margin: 15px 0; }
-            .products-table th, .products-table td { padding: 3px; }
+            .form-content.active { display: block !important; padding: 0; }
+            .print-area { width: 100%; min-height: auto; padding: 0.4in; margin: 0; }
+            .header { margin-bottom: 12px; padding-bottom: 8px; }
+            .form-row { margin-bottom: 8px; }
+            .table-section { margin: 12px 0; }
+            .products-table th, .products-table td { padding: 3px; height: 30px !important; }
             .signature-section { margin-top: 20px; page-break-inside: avoid; }
-            h3 { margin: 15px 0 10px 0 !important; }
-            textarea { min-height: 40px; }
-            .products-table input, .products-table select, input, select, textarea { border: none !important; background-color: white !important; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 10pt; }
+            .signature-line { height: 35px !important; margin-bottom: 5px;}
+            h3 { margin: 12px 0 8px 0 !important; }
+            textarea { min-height: 30px !important; }
+            
+            /* Limpia la apariencia de los campos para que parezca texto plano */
+            .products-table input, .products-table select, input, select, textarea { border: none !important; background-color: white !important; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 9.5pt; }
             .underline-field { border-bottom: 1px solid #333 !important; }
             input[readonly] { background-color: #f0f0f0 !important; }
-
-            /* Oculta los campos de bodega para dejar el espacio en blanco */
-            .handwriting-field {
-                display: none !important;
-            }
         }
-        /* ✨ FIN: CSS DE IMPRESIÓN CORREGIDO */
+        /* ✨ FIN: CSS DE IMPRESIÓN */
     </style>
 </head>
 <body>
@@ -92,108 +86,40 @@
                         <div class="form-subtitle">Formulario para procesamiento de reembolsos</div>
                     </div>
                 </div>
-                
                 <form>
                     <div class="form-row">
-                         <div class="form-group">
-                            <label for="fecha-devolucion">Fecha de Solicitud:</label>
-                            <input type="text" id="fecha-devolucion" name="fecha-devolucion" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="hora-devolucion">Hora de Solicitud:</label>
-                            <input type="text" id="hora-devolucion" name="hora-devolucion" readonly>
-                        </div>
+                         <div class="form-group"><label for="fecha-devolucion">Fecha de Solicitud:</label><input type="text" id="fecha-devolucion" name="fecha-devolucion" readonly></div>
+                        <div class="form-group"><label for="hora-devolucion">Hora de Solicitud:</label><input type="text" id="hora-devolucion" name="hora-devolucion" readonly></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="rut-cliente">RUT Cliente:</label>
-                            <input type="text" id="rut-cliente" name="rut-cliente" class="underline-field" placeholder="12.345.678-9">
-                        </div>
-                        <div class="form-group">
-                            <label for="nombre-cliente-dev">Nombre Cliente:</label>
-                            <input type="text" id="nombre-cliente-dev" name="nombre-cliente-dev" class="underline-field" placeholder="Nombre completo del cliente">
-                        </div>
+                        <div class="form-group"><label for="rut-cliente">RUT Cliente:</label><input type="text" id="rut-cliente" name="rut-cliente" class="underline-field" placeholder="12.345.678-9"></div>
+                        <div class="form-group"><label for="nombre-cliente-dev">Nombre Cliente:</label><input type="text" id="nombre-cliente-dev" name="nombre-cliente-dev" class="underline-field" placeholder="Nombre completo del cliente"></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="nota-venta">ID de Solicitud:</label>
-                            <input type="text" id="nota-venta" name="nota-venta" readonly>
-                        </div>
-                        <div class="form-group">
-                            <label for="quien-solicita">Quien Solicita (Nombre):</label>
-                            <input type="text" id="quien-solicita" name="quien-solicita" class="underline-field" placeholder="Nombre de quien llena el formulario">
-                        </div>
+                        <div class="form-group"><label for="nota-venta">ID de Solicitud:</label><input type="text" id="nota-venta" name="nota-venta" readonly></div>
+                        <div class="form-group"><label for="quien-solicita">Quien Solicita (Nombre):</label><input type="text" id="quien-solicita" name="quien-solicita" class="underline-field" placeholder="Nombre de quien llena el formulario"></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group" style="flex: 0.4;">
-                            <label for="tipo-doc-dev">Tipo Documento:</label>
-                            <select id="tipo-doc-dev" name="tipo-doc-dev">
-                                <option value="Nota de Venta">Nota de Venta</option>
-                                <option value="Boleta">Boleta</option>
-                                <option value="Factura">Factura</option>
-                            </select>
-                        </div>
-                        <div class="form-group" style="flex: 0.6;">
-                            <label for="numero-doc-dev">Nº Documento Asociado:</label>
-                            <input type="text" id="numero-doc-dev" name="numero-doc-dev" class="underline-field" placeholder="Número del documento">
-                        </div>
+                        <div class="form-group" style="flex: 0.4;"><label for="tipo-doc-dev">Tipo Documento:</label><select id="tipo-doc-dev" name="tipo-doc-dev"><option>Nota de Venta</option><option>Boleta</option><option>Factura</option></select></div>
+                        <div class="form-group" style="flex: 0.6;"><label for="numero-doc-dev">Nº Documento Asociado:</label><input type="text" id="numero-doc-dev" name="numero-doc-dev" class="underline-field" placeholder="Número del documento"></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group full">
-                            <label for="motivo">Motivo de la Devolución:</label>
-                            <textarea id="motivo" name="motivo" rows="3" placeholder="Describa detalladamente el motivo..."></textarea>
-                        </div>
+                        <div class="form-group full"><label for="motivo">Motivo de la Devolución:</label><textarea id="motivo" name="motivo" rows="3" placeholder="Describa detalladamente el motivo..."></textarea></div>
                     </div>
-                    <h3 style="margin: 30px 0 20px 0; color: #2c5aa0; border-bottom: 1px solid #ccc; padding-bottom: 10px;">DATOS BANCARIOS PARA REEMBOLSO</h3>
+                    <h3 style="margin: 20px 0 15px 0; color: #2c5aa0; border-bottom: 1px solid #ccc; padding-bottom: 8px;">DATOS BANCARIOS PARA REEMBOLSO</h3>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="banco">Banco:</label>
-                            <select id="banco" name="banco">
-                                <option value="">Seleccione banco</option>
-                                <option value="banco-chile">Banco de Chile</option>
-                                <option value="banco-estado">BancoEstado</option>
-                                <option value="santander">Santander</option>
-                                <option value="bci">BCI</option>
-                                <option value="scotiabank">Scotiabank</option>
-                                <option value="itau">Itaú</option>
-                                <option value="security">Banco Security</option>
-                                <option value="falabella">Banco Falabella</option>
-                                <option value="ripley">Banco Ripley</option>
-                                <option value="consorcio">Banco Consorcio</option>
-                                <option value="internacional">Banco Internacional</option>
-                                <option value="edwards">Banco Edwards Citi</option>
-                                <option value="bbva">BBVA</option>
-                                <option value="paris">Banco Paris</option>
-                                <option value="mercado-pago">Mercado Pago</option>
-                                <option value="tempo">Tempo</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="tipo-cuenta">Tipo de Cuenta:</label>
-                            <select id="tipo-cuenta" name="tipo-cuenta"><option value="">Seleccione tipo</option><option value="corriente">Cuenta Corriente</option><option value="vista">Cuenta Vista</option><option value="ahorro">Cuenta de Ahorro</option><option value="rut">Cuenta RUT</option></select>
-                        </div>
+                        <div class="form-group"><label for="banco">Banco:</label><select id="banco" name="banco"><option value="">Seleccione banco</option><option>Banco de Chile</option><option>BancoEstado</option><option>Santander</option><option>BCI</option><option>Scotiabank</option><option>Itaú</option><option>Banco Security</option><option>Banco Falabella</option><option>Banco Ripley</option><option>Banco Consorcio</option><option>Banco Internacional</option><option>Banco Edwards Citi</option><option>BBVA</option><option>Banco Paris</option><option>Mercado Pago</option><option>Tempo</option></select></div>
+                        <div class="form-group"><label for="tipo-cuenta">Tipo de Cuenta:</label><select id="tipo-cuenta" name="tipo-cuenta"><option value="">Seleccione tipo</option><option>Cuenta Corriente</option><option>Cuenta Vista</option><option>Cuenta de Ahorro</option><option>Cuenta RUT</option></select></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group">
-                            <label for="numero-cuenta">Número de Cuenta:</label>
-                            <input type="text" id="numero-cuenta" name="numero-cuenta" class="underline-field" placeholder="Número de cuenta">
-                        </div>
-                        <div class="form-group">
-                            <label for="correo">Correo Electrónico:</label>
-                            <input type="email" id="correo" name="correo" class="underline-field" placeholder="correo@ejemplo.com">
-                        </div>
+                        <div class="form-group"><label for="numero-cuenta">Número de Cuenta:</label><input type="text" id="numero-cuenta" name="numero-cuenta" class="underline-field" placeholder="Número de cuenta"></div>
+                        <div class="form-group"><label for="correo">Correo Electrónico:</label><input type="email" id="correo" name="correo" class="underline-field" placeholder="correo@ejemplo.com"></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group half">
-                            <label for="valor">Valor a Devolver:</label>
-                            <input type="text" id="valor" name="valor" class="underline-field" placeholder="$0">
-                        </div>
+                        <div class="form-group" style="flex: 0.5;"><label for="valor">Valor a Devolver:</label><input type="text" id="valor" name="valor" class="underline-field" placeholder="$0"></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group full">
-                            <label for="observaciones">Observaciones Adicionales:</label>
-                            <textarea id="observaciones" name="observaciones" rows="4" placeholder="Comentarios adicionales..."></textarea>
-                        </div>
+                        <div class="form-group full"><label for="observaciones">Observaciones Adicionales:</label><textarea id="observaciones" name="observaciones" rows="3" placeholder="Comentarios adicionales..."></textarea></div>
                     </div>
                     <div class="signature-section">
                         <div class="signature-box"><div class="signature-line"></div><strong>Firma Solicitante</strong><br><span style="font-size: 11px;" id="nombre-solicitante-firma">Nombre del solicitante</span></div>
@@ -222,7 +148,7 @@
                         <div class="form-group"><label for="vendedor">Receptor (Nombre):</label><input type="text" id="vendedor" name="vendedor" class="underline-field" placeholder="Nombre del receptor"></div>
                     </div>
                     <div class="form-row">
-                        <div class="form-group" style="flex: 0.4;"><label for="tipo-doc-rec">Tipo Documento:</label><select id="tipo-doc-rec" name="tipo-doc-rec"><option value="Guía de Despacho">Guía de Despacho</option><option value="Factura">Factura</option><option value="Boleta">Boleta</option><option value="Nota de Venta">Nota de Venta</option></select></div>
+                        <div class="form-group" style="flex: 0.4;"><label for="tipo-doc-rec">Tipo Documento:</label><select id="tipo-doc-rec" name="tipo-doc-rec"><option>Guía de Despacho</option><option>Factura</option><option>Boleta</option><option>Nota de Venta</option></select></div>
                         <div class="form-group" style="flex: 0.6;"><label for="numero-doc-rec">Nº Documento Asociado:</label><input type="text" id="numero-doc-rec" name="numero-doc-rec" class="underline-field" placeholder="Número del documento"></div>
                     </div>
                     <div class="form-row">
@@ -243,47 +169,47 @@
                                     <td><input type="text"></td>
                                     <td><input type="number" min="0"></td>
                                     <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
-                                    <td><input type="text" class="handwriting-field"></td>
+                                    <td>&nbsp;</td>
                                     <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
-                                    <td><select class="handwriting-field"><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
-                                </tr>
-                                 <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
-                                    <td><input type="text" class="handwriting-field"></td>
-                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
-                                    <td><select class="handwriting-field"><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td><input type="text"></td>
                                     <td><input type="text"></td>
                                     <td><input type="number" min="0"></td>
                                     <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
-                                    <td><input type="text" class="handwriting-field"></td>
+                                    <td>&nbsp;</td>
                                     <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
-                                    <td><select class="handwriting-field"><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td><input type="text"></td>
+                                    <td><input type="text"></td>
+                                    <td><input type="number" min="0"></td>
+                                    <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
+                                    <td>&nbsp;</td>
+                                    <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                <tr>
                                     <td><input type="text"></td>
                                     <td><input type="text"></td>
                                     <td><input type="number" min="0"></td>
                                     <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
-                                    <td><input type="text" class="handwriting-field"></td>
+                                    <td>&nbsp;</td>
                                     <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
-                                    <td><select class="handwriting-field"><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
+                                    <td>&nbsp;</td>
                                 </tr>
                                 <tr>
                                     <td><input type="text"></td>
                                     <td><input type="text"></td>
                                     <td><input type="number" min="0"></td>
                                     <td><input type="text" placeholder="Ej: Sellado, caja rota..."></td>
-                                    <td><input type="text" class="handwriting-field"></td>
+                                    <td>&nbsp;</td>
                                     <td><select><option value="">-</option><option>Sí</option><option>No</option><option>N/A</option></select></td>
-                                    <td><select class="handwriting-field"><option value="">-</option><option>Conforme</option><option>Rechazado</option></select></td>
+                                    <td>&nbsp;</td>
                                 </tr>
-                            </tbody>
+                                </tbody>
                         </table>
                     </div>
                     <div class="form-row">
