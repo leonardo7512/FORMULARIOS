@@ -39,7 +39,6 @@
         .products-table input, .products-table select { width: 100%; border: 1px solid #ddd; padding: 4px; font-size: 11px; }
         .action-buttons { margin-top: 40px; text-align: right; }
         .action-buttons button { background: #2c5aa0; color: white; border: none; padding: 12px 25px; border-radius: 5px; cursor: pointer; font-size: 16px; margin-left: 10px; }
-        .action-buttons button.print-only { background-color: #6c757d; }
         
         @media print {
             body { background: white; padding: 0; margin: 0; font-size: 9.5pt; line-height: 1.15; }
@@ -58,7 +57,7 @@
             .products-table input, .products-table select, input, select { border: none !important; background-color: white !important; -webkit-appearance: none; -moz-appearance: none; appearance: none; font-size: 9.5pt; }
             .underline-field { border-bottom: 1px solid #333 !important; }
             input[readonly] { background-color: #f0f0f0 !important; }
-            .print-btn { display: none; } /* Oculta el botón superior al imprimir */
+            .print-btn { display: none; }
         }
     </style>
 </head>
@@ -80,7 +79,7 @@
                         <div class="form-subtitle">Formulario para procesamiento de reembolsos</div>
                     </div>
                 </div>
-                <form id="form-devolucion" method="POST" action="https://script.google.com/macros/s/AKfycbwfyvYojmS7R4hZZr4Yn-K7NZ398VifjpVKSTi4U3mgd4kcIHJVqsK1pAVDznngs6-K5Q/exec" target="_blank">
+                <form id="form-devolucion" method="POST" action="https://script.google.com/macros/s/AKfycbwfyvYojmS7R4hZZr4Yn-K7NZ398VifjpVKSTi4U3mgd4kcIHJVqsK1pAVDznngs6-K5Q/exec">
                     <input type="hidden" name="formType" value="devolucion">
                     
                     <div class="form-row">
@@ -203,7 +202,7 @@
                     <input type="hidden" name="productos" id="hidden-productos-dev" value="">
                     
                     <div class="action-buttons">
-                        <button type="submit" onclick="setTimeout(() => window.print(), 500)">💾 Imprimir y Guardar</button>
+                        <button type="button" onclick="handleSubmitAndPrint('form-devolucion')">🖨️ Imprimir</button>
                     </div>
                     
                     <div class="signature-section">
@@ -231,7 +230,7 @@
                         <div class="form-subtitle">Control de ingreso y validación de productos</div>
                     </div>
                 </div>
-                <form id="form-recepcion" method="POST" action="https://script.google.com/macros/s/AKfycbwfyvYojmS7R4hZZr4Yn-K7NZ398VifjpVKSTi4U3mgd4kcIHJVqsK1pAVDznngs6-K5Q/exec" target="_blank">
+                <form id="form-recepcion" method="POST" action="https://script.google.com/macros/s/AKfycbwfyvYojmS7R4hZZr4Yn-K7NZ398VifjpVKSTi4U3mgd4kcIHJVqsK1pAVDznngs6-K5Q/exec">
                     <input type="hidden" name="formType" value="recepcion">
                     
                     <div class="form-row">
@@ -297,62 +296,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -374,7 +324,7 @@
                     </div>
                     
                     <div class="action-buttons">
-                        <button type="submit" onclick="setTimeout(() => window.print(), 500)">💾 Imprimir y Guardar</button>
+                        <button type="button" onclick="handleSubmitAndPrint('form-recepcion')">🖨️ Imprimir</button>
                     </div>
                     
                     <div class="signature-section">
@@ -402,7 +352,7 @@
                         <div class="form-subtitle">Formulario interno para evaluación de cotizaciones</div>
                     </div>
                 </div>
-                <form id="form-analisis" method="POST" action="https://script.google.com/macros/s/AKfycbwfyvYojmS7R4hZZr4Yn-K7NZ398VifjpVKSTi4U3mgd4kcIHJVqsK1pAVDznngs6-K5Q/exec" target="_blank">
+                <form id="form-analisis" method="POST" action="https://script.google.com/macros/s/AKfycbwfyvYojmS7R4hZZr4Yn-K7NZ398VifjpVKSTi4U3mgd4kcIHJVqsK1pAVDznngs6-K5Q/exec">
                     <input type="hidden" name="formType" value="analisis">
                     
                     <div class="form-row">
@@ -442,25 +392,13 @@
                         <div class="form-group">
                             <label for="web-rrss">Canal de Contacto:</label>
                             <select id="web-rrss" name="webRrss">
-                                <option>Web</option>
-                                <option>Instagram</option>
-                                <option>Facebook</option>
-                                <option>WhatsApp</option>
-                                <option>Presencial</option>
-                                <option>Teléfono</option>
-                                <option>Email</option>
-                                <option>Otro</option>
+                                <option>Web</option><option>Instagram</option><option>Facebook</option><option>WhatsApp</option><option>Presencial</option><option>Teléfono</option><option>Email</option><option>Otro</option>
                             </select>
                         </div>
                         <div class="form-group">
                             <label for="perfil-cliente">Perfil del Cliente:</label>
                             <select id="perfil-cliente" name="perfilCliente">
-                                <option>Empresa</option>
-                                <option>Particular</option>
-                                <option>Revendedor</option>
-                                <option>Institución</option>
-                                <option>Gobierno</option>
-                                <option>Otro</option>
+                                <option>Empresa</option><option>Particular</option><option>Revendedor</option><option>Institución</option><option>Gobierno</option><option>Otro</option>
                             </select>
                         </div>
                     </div>
@@ -469,11 +407,7 @@
                         <div class="form-group">
                             <label for="metodo-venta">Método de Venta:</label>
                             <select id="metodo-venta" name="metodoVenta">
-                                <option>Venta Directa</option>
-                                <option>Cotización</option>
-                                <option>Licitación</option>
-                                <option>Convenio</option>
-                                <option>Otro</option>
+                                <option>Venta Directa</option><option>Cotización</option><option>Licitación</option><option>Convenio</option><option>Otro</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -496,62 +430,13 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text"></td>
-                                    <td><input type="text"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="number" min="0"></td>
-                                    <td><input type="text"></td>
-                                </tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
+                                <tr><td><input type="text"></td><td><input type="text"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="number" min="0"></td><td><input type="text"></td></tr>
                             </tbody>
                         </table>
                     </div>
@@ -569,9 +454,7 @@
                         <div class="form-group">
                             <label for="urgencia">Urgencia:</label>
                             <select id="urgencia" name="urgencia">
-                                <option>Normal</option>
-                                <option>Alta</option>
-                                <option>Urgente</option>
+                                <option>Normal</option><option>Alta</option><option>Urgente</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -581,7 +464,7 @@
                     </div>
                     
                     <div class="action-buttons">
-                         <button type="submit" onclick="setTimeout(() => window.print(), 500)">💾 Imprimir y Guardar</button>
+                         <button type="button" onclick="handleSubmitAndPrint('form-analisis')">🖨️ Imprimir</button>
                     </div>
                     
                     <div class="signature-section">
@@ -618,7 +501,6 @@
             return resultado;
         }
 
-        // Función para recolectar datos de las tablas
         function getTableData(tableId) {
             const table = document.getElementById(tableId);
             const data = [];
@@ -638,7 +520,6 @@
             return data.join('\n');
         }
         
-        // Preparar formularios antes del envío
         function prepararFormularioParaEnvio(formId, tableId, hiddenInputId) {
             if (tableId) {
                 const tableData = getTableData(tableId);
@@ -646,19 +527,34 @@
             }
         }
 
-        // Event listeners para cada formulario
-        document.getElementById('form-devolucion').addEventListener('submit', function(e) {
-            // Para devolución no hay tabla de productos
-            document.getElementById('hidden-productos-dev').value = '';
-        });
+        // --- NUEVA FUNCIÓN PARA ENVIAR E IMPRIMIR ---
+        function handleSubmitAndPrint(formId) {
+            const form = document.getElementById(formId);
+            if (!form) return;
 
-        document.getElementById('form-recepcion').addEventListener('submit', function(e) {
-            prepararFormularioParaEnvio('form-recepcion', 'tabla-recepcion', 'hidden-productos-rec');
-        });
+            // 1. Preparar los datos específicos de cada formulario (tablas, etc.)
+            if (formId === 'form-devolucion') {
+                document.getElementById('hidden-productos-dev').value = ''; // No hay tabla
+            } else if (formId === 'form-recepcion') {
+                prepararFormularioParaEnvio('form-recepcion', 'tabla-recepcion', 'hidden-productos-rec');
+            } else if (formId === 'form-analisis') {
+                prepararFormularioParaEnvio('form-analisis', 'tabla-analisis', 'hidden-productos-an');
+            }
+            
+            // 2. Enviar los datos del formulario en segundo plano
+            const formData = new FormData(form);
+            const url = form.action;
 
-        document.getElementById('form-analisis').addEventListener('submit', function(e) {
-            prepararFormularioParaEnvio('form-analisis', 'tabla-analisis', 'hidden-productos-an');
-        });
+            fetch(url, {
+                method: 'POST',
+                body: formData,
+                mode: 'no-cors' // Evita errores de CORS ya que no necesitamos leer la respuesta
+            }).catch(error => console.error('Error al enviar el formulario:', error));
+
+            // 3. Abrir el diálogo de impresión inmediatamente
+            // La solicitud fetch continuará en segundo plano.
+            window.print();
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             const hoy = new Date();
